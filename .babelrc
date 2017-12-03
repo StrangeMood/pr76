@@ -1,0 +1,28 @@
+{
+  "presets": [
+    ["env", {
+      "modules": false,
+      "targets": {
+        "browsers": ["chrome >= 60", "safari >= 11"]
+      }
+    }],
+    "react"
+  ],
+  "plugins": [
+    "transform-function-bind",
+    "transform-object-rest-spread",
+    "transform-class-properties"
+  ],
+  "env": {
+    "test": {
+      "presets": ["env", "react"]
+    },
+    "development": {
+      "plugins": ["react-hot-loader/babel"]
+    },
+    "production": {
+      "plugins": [
+      ]
+    }
+  }
+}

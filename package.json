@@ -1,0 +1,81 @@
+{
+  "scripts": {
+    "start": "webpack-dev-server",
+    "build": "rm -rf ./dist && webpack",
+    "test": "jest",
+    "lint": "eslint --ignore-pattern __tests__ src/ && eslint --config .eslintrc-test.js --ext test.js src/",
+    "lint-fix": "eslint --fix --ignore-pattern __tests__ src/ && eslint --fix --config .eslintrc-test.js --ext test.js src/",
+    "precommit": "lint-staged",
+    "deploy": "NODE_ENV=production yarn build && firebase deploy --only hosting"
+  },
+  "lint-staged": {
+    "*.js": [
+      "eslint --fix",
+      "git add"
+    ]
+  },
+  "engines": {
+    "node": ">=8.2.0"
+  },
+  "dependencies": {
+    "autoprefixer": "^7.1.2",
+    "babel": "^6.23.0",
+    "babel-core": "^6.25.0",
+    "babel-eslint": "^8.0.2",
+    "babel-jest": "^21.2.0",
+    "babel-loader": "^7.1.1",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-function-bind": "^6.22.0",
+    "babel-plugin-transform-object-rest-spread": "^6.23.0",
+    "babel-preset-env": "^1.6.0",
+    "babel-preset-react": "^6.24.1",
+    "classnames": "^2.2.5",
+    "color": "^2.0.0",
+    "connected-react-router": "^4.3.0",
+    "copy-webpack-plugin": "^4.0.1",
+    "css-loader": "^0.28.4",
+    "date-fns": "^1.29.0",
+    "dotenv": "^4.0.0",
+    "dotenv-webpack": "^1.5.4",
+    "exports-loader": "^0.6.4",
+    "history": "^4.7.2",
+    "html-webpack-plugin": "^2.30.0",
+    "imports-loader": "^0.7.1",
+    "node-sass": "^4.5.3",
+    "postcss-loader": "^2.0.6",
+    "prop-types": "^15.5.10",
+    "ramda": "^0.25.0",
+    "randomatic": "^2.0.0",
+    "react": "^16.1.1",
+    "react-dom": "^16.1.1",
+    "react-hot-loader": "^3.1.3",
+    "react-redux": "^5.0.5",
+    "react-router-dom": "^4.1.2",
+    "react-test-renderer": "^16.1.1",
+    "react-transition-group": "^2.2.0",
+    "redux": "^3.7.2",
+    "redux-actions": "^2.2.1",
+    "redux-devtools-extension": "^2.13.2",
+    "redux-thunk": "^2.2.0",
+    "reselect": "^3.0.1",
+    "sanitize.css": "^5.0.0",
+    "sass-loader": "^6.0.6",
+    "style-loader": "^0.19.0",
+    "svg-sprite-loader": "^3.0.8",
+    "url-search-params": "^0.10.0",
+    "webpack": "^3.4.1",
+    "webpack-dev-server": "^2.6.1",
+    "webpack-merge": "^4.1.0"
+  },
+  "devDependencies": {
+    "eslint": "^4.3.0",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-jest": "^21.3.2",
+    "eslint-plugin-jsx-a11y": "^6.0.2",
+    "eslint-plugin-react": "^7.1.0",
+    "husky": "^0.14.3",
+    "jest": "^21.2.1",
+    "lint-staged": "^5.0.0"
+  }
+}

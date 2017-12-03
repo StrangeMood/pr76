@@ -1,0 +1,12 @@
+{
+  "rules": {
+    "users": {
+      ".read": "auth != null",
+      ".write": "auth != null"
+    },
+    "projects": {
+      ".read": true,
+      ".write": "auth != null"
+    }
+  }
+}

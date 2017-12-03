@@ -1,0 +1,36 @@
+body
+  background-color: rgba(255, 149, 56, 0.17)
+  height: 100%
+
+#app
+  height: 100%
+
+.project_collaborator
+  border: 2px solid lightgray
+
+  &.-no-presence
+    border-color: transparent
+  &.-offline
+    border-color: lightgray
+  &.-online
+    border-color: lightgreen
+
+
+
+.container
+  height: 100%
+  display: flex
+  flex-direction: row
+
+.project-sidebar
+  padding-top: 30px
+  width: 400px
+  flex: auto
+
+.map
+  height: 100vh
+  width: 100%
+  flex: auto
+
+.auth-info
+  position: fixed
