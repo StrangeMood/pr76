@@ -26,9 +26,24 @@ class MapFeaturesLayer extends Component {
         type: 'circle',
         source: 'features',
         paint: {
-          'circle-radius': 10,
+          'circle-radius': { base: 1.75, stops: [[12, 4], [22, 180]] },
           'circle-color': '#FF4500',
         },
+      })
+
+      map.on('click', 'features', (e) => {
+        console.log(e.features)
+        e.originalEvent.stopPropagation()
+      })
+
+      // Change the cursor to a pointer when the mouse is over the states layer.
+      map.on('mouseenter', 'features', () => {
+        map.getCanvas().style.cursor = 'pointer'
+      })
+
+      // Change it back to a pointer when it leaves.
+      map.on('mouseleave', 'features', () => {
+        map.getCanvas().style.cursor = ''
       })
     })
   }

@@ -1,0 +1,61 @@
+.sign-in
+  position: absolute
+  top: 0
+  left: 0
+  right: 0
+  bottom: 0
+
+  display: flex
+  align-items: center
+  justify-content: flex-start
+  flex-direction: column
+
+  &::before
+    content: ''
+    position: absolute
+    top: 0
+    left: 0
+    right: 0
+    bottom: 0
+    background: url('/bg800x600@2x.png') no-repeat fixed
+    background-size: cover
+    background-position: center center
+    opacity: .4
+    z-index: -1
+
+.sign-in_project-name
+  font-size: 4rem
+  line-height: $baseline*6
+  margin-bottom: $baseline*2
+  margin-top: 15vh
+  font-stretch: extra-condensed
+  font-weight: 100
+
+
+.sign-in_google
+  height: $baseline*4
+  line-height: $baseline*4 - 2px
+  padding: 0 1.2rem
+  .icon
+    vertical-align: top
+    height: $baseline*2.5
+    margin-top: ($baseline*1.5 - 2px)/2
+    margin-right: .5rem
+    margin-left: -.25rem
+    filter: grayscale(40%)
+  &:hover
+    .icon
+      filter: none
+
+.auth-info
+  position: absolute
+  top: 0
+  right: 0
+  background: transparent
+  z-index: 10
+  line-height: $baseline*3
+
+.auth-info_logged-as
+  vertical-align: top
+  display: inline-block
+  margin-top: -1px

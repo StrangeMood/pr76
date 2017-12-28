@@ -16,7 +16,10 @@ class MapDrawing extends Component {
     const map = this.context.map
 
     map.on('load', () => {
-      map.on('click', (e) => { this.props.addPoint(e.lngLat) })
+      map.on('click', (e) => {
+        console.log('CREATE NEW POINT')
+        this.props.addPoint(e.lngLat)
+      })
     })
   }
 

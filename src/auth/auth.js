@@ -1,9 +1,11 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
 
 import { path } from 'ramda'
+
+import SignIn from './sign_in'
 
 import { requestLogin, requestLogout, subscribeOnCurrentUserState } from './auth_actions'
 import { currentUserSelector, isCheckingAuthSelector } from './auth_selectors'
@@ -28,24 +30,18 @@ class Auth extends Component {
   render() {
     const { currentUser, isChecking } = this.props
 
-    if (isChecking) return <div>CHECKING...</div>
+    if (isChecking) return null
 
-    if (!currentUser) {
-      return (
-        <div>
-          <div><button onClick={this.onLogin}>SIGN IN</button></div>
-          {this.props.children[0]}
-        </div>
-      )
-    }
+    if (!currentUser) return <SignIn onSignIn={this.onLogin} />
 
     return (
-      <div>
+      <Fragment>
         <div className="auth-info">
-          Logged in as: {currentUser.name}, <button onClick={this.onLogout}>LOG OUT</button>
+          <span className="auth-info_logged-as">Logged in as: {currentUser.name}</span>
+          <button onClick={this.onLogout}>LOG OUT</button>
         </div>
         {this.props.children[1]}
-      </div>
+      </Fragment>
     )
   }
 }

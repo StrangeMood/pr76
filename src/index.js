@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom'
 
 import { AppContainer } from 'react-hot-loader'
 
-import 'sanitize.css'
 import './styles/app.sass'
 
 import './firebase'
