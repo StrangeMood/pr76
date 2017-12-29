@@ -1,5 +1,7 @@
 import { createSelector } from 'reselect'
-import { pathOr, values } from 'ramda'
+import { pathOr, values, path } from 'ramda'
+
+export const mapBaseStyleSelector = path(['map', 'baseStyle'])
 
 export const projectFeaturesSelector = createSelector(
   pathOr({}, ['project', 'project', 'features']),

@@ -12,6 +12,7 @@ module.exports = {
     google: false,
     firebase: false,
     mapboxgl: false,
+    turf: false,
   },
 
   rules: {

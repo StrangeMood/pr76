@@ -7,6 +7,7 @@ import request from 'superagent'
 import { once } from 'ramda'
 
 import MapIcon from '../icons/map.svg'
+import { MAP_BASE_STYLE } from './map_actions'
 
 const requestBingMapOptions = once(async () => {
   const BING_CONF_URL =
@@ -29,49 +30,66 @@ const requestBingMapOptions = once(async () => {
 class MapSatelliteLayer extends Component {
   static contextTypes = { map: PropTypes.object.isRequired, controls: PropTypes.object.isRequired }
 
-  state = { satellite: false, disabled: true }
-
-  componentDidMount() {
-    this.context.map.on('load', () => this.setState({ disabled: false }))
+  static propTypes = {
+    baseStyle: PropTypes.oneOf([MAP_BASE_STYLE.ROAD, MAP_BASE_STYLE.SATELLITE]).isRequired,
+    setBaseStyle: PropTypes.func.isRequired,
   }
 
-  switchToSatellite = async () => {
-    this.setState({ satellite: true })
-    this.baseStyle = this.context.map.getStyle()
+  state = { disabled: true }
 
-    this.context.map.setStyle({ version: 8, sources: {}, layers: [] })
+  componentDidMount() {
+    const gmap = this.context.map
 
-    const sourceConfig = await requestBingMapOptions()
+    gmap.on('load', async () => {
+      this.baseLayers = gmap.getStyle().layers.map(l => l.id)
 
-    this.context.map.setStyle({
-      version: 8,
-      sources: { bing: sourceConfig },
-      layers: [{
+      const sourceConfig = await requestBingMapOptions()
+
+      gmap.addSource('bing', sourceConfig)
+      gmap.addLayer({
         id: 'satellite',
         type: 'raster',
         source: 'bing',
         minzoom: 0,
         maxzoom: 17,
-      }],
+        layout: { visibility: 'none' },
+      }, this.baseLayers[1])
+
+      this.switchBaseStyle(this.props.baseStyle)
+
+      this.setState({ disabled: false })
     })
   }
 
-  switchToBase = () => {
-    this.setState({ satellite: false })
-    this.context.map.setStyle(this.baseStyle)
+  componentWillReceiveProps(nextProps) {
+    this.switchBaseStyle(nextProps.baseStyle)
+  }
+
+  onSwitchPress = () => {
+    this.props.setBaseStyle(this.props.baseStyle === MAP_BASE_STYLE.ROAD ?
+      MAP_BASE_STYLE.SATELLITE : MAP_BASE_STYLE.ROAD)
+  }
+
+  switchBaseStyle = (style) => {
+    const gmap = this.context.map
+    this.baseLayers.forEach((layer) => {
+      gmap.setLayoutProperty(layer, 'visibility', style === MAP_BASE_STYLE.ROAD ? 'visible' : 'none')
+    })
+    gmap.setLayoutProperty('satellite', 'visibility', style === MAP_BASE_STYLE.SATELLITE ? 'visible' : 'none')
   }
 
   render() {
-    const { disabled, satellite } = this.state
+    const { disabled } = this.state
+    const satellite = this.props.baseStyle === MAP_BASE_STYLE.SATELLITE
 
     const control = createPortal(
       <button
         disabled={disabled}
         className={cn('map-satellite-layer_switch', { '-active': satellite })}
-        onClick={satellite ? this.switchToBase : this.switchToSatellite}
+        onClick={this.onSwitchPress}
         title={satellite ? 'Satellite' : 'Street'}
         >
-        <MapIcon className="icon" />
+        <MapIcon />
       </button>,
       this.context.controls
     )
